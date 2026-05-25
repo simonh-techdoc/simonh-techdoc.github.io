@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simon Hülsbömer – Technical Writer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:     #1a1a1a;
+      --paper:   #f5f2ec;
+      --accent:  #2d5a3d;
+      --muted:   #6b6560;
+      --rule:    #d4cfc8;
+      --mono:    'DM Mono', monospace;
+      --serif:   'Fraunces', Georgia, serif;
+    }
+
+    html { font-size: 17px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Layout ── */
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 5rem 0 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: rise 0.6s ease forwards 0.1s;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.6rem;
+      opacity: 0;
+      animation: rise 0.7s ease forwards 0.2s;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 520px;
+      opacity: 0;
+      animation: rise 0.7s ease forwards 0.35s;
+    }
+
+    /* ── Sections ── */
+    section {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    /* ── Leitsatz ── */
+    .leitsatz {
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.6;
+      border-left: 2px solid var(--accent);
+      padding-left: 1.4rem;
+      color: var(--ink);
+    }
+
+    /* ── Profil-Text ── */
+    .profil p { margin-bottom: 1rem; }
+    .profil p:last-child { margin-bottom: 0; }
+
+    /* ── Projekt-Card ── */
+    .project-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 2rem 2rem 1.8rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .project-title {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+    }
+
+    .project-desc {
+      font-size: 0.93rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      line-height: 1.65;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      letter-spacing: 0.08em;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 0.2rem 0.55rem;
+      color: var(--muted);
+    }
+
+    .project-link {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+
+    .project-link:hover { border-bottom-color: var(--accent); }
+
+    /* ── Skills-Raster ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 3rem;
+    }
+
+    .skill-group-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    /* ── Kontakt ── */
+    .contact-line {
+      font-size: 0.93rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-line a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .contact-line a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2.5rem 0;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--rule);
+      text-align: center;
+    }
+
+    /* ── Animation ── */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    section { opacity: 0; animation: rise 0.6s ease forwards; }
+    section:nth-of-type(1) { animation-delay: 0.5s; }
+    section:nth-of-type(2) { animation-delay: 0.65s; }
+    section:nth-of-type(3) { animation-delay: 0.8s; }
+    section:nth-of-type(4) { animation-delay: 0.95s; }
+
+    @media (max-width: 500px) {
+      .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Technical Writer · Information Architecture</p>
+    <h1>Simon<br /><em>Hülsbömer</em></h1>
+    <p class="tagline">Ich denke Dokumentation nicht vom Dokument her, sondern von der Frage, mit der ein Nutzer danach sucht.</p>
+  </header>
+
+  <section>
+    <p class="section-label">Profil</p>
+    <div class="profil">
+      <p>Über 18 Jahre Erfahrung an der Schnittstelle von B2B-IT, Kommunikation und Wissensstrukturen – zuletzt als Senior Research Manager und Leitender Redakteur bei IDG (COMPUTERWOCHE, CIO, TECCHANNEL).</p>
+      <p>Aktuell: IHK-Weiterbildung Technischer Redakteur (tekom-akkreditiert) mit Praxisprojekt bei der tecteam GmbH Dortmund. Schwerpunkte: strukturierte Inhalte, modulare Dokumentation, Single Source Publishing, DITA/XML.</p>
+      <p>Langfristiges Ziel: CCMS-Beratung und Informationsarchitektur.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Leitsatz</p>
+    <p class="leitsatz">„Ich denke Dokumentation nicht vom Dokument her, sondern von der Frage, mit der ein Nutzer danach sucht."</p>
+  </section>
+
+  <section>
+    <p class="section-label">Projekt</p>
+    <div class="project-card">
+      <p class="project-title">Escape Room – DITA-Dokumentationsprojekt</p>
+      <p class="project-desc">Exemplarisches DITA-Projekt mit vollständigem Publishing-Workflow: Topic-based Writing, Key-basierte Wiederverwendung, automatisierter Export als HTML5, PDF und WordPress via DITA-OT, Python und WordPress REST API.</p>
+      <div class="tags">
+        <span class="tag">DITA 1.3</span>
+        <span class="tag">XML</span>
+        <span class="tag">DITA-OT</span>
+        <span class="tag">Single Source Publishing</span>
+        <span class="tag">Markdown</span>
+        <span class="tag">Python</span>
+        <span class="tag">Git</span>
+        <span class="tag">WordPress REST API</span>
+      </div>
+      <a class="project-link" href="https://github.com/simonh-techdoc/escape-room-dita-wordpress-export" target="_blank" rel="noopener">
+        → GitHub ansehen
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Kompetenzen</p>
+    <div class="skills-grid">
+      <div>
+        <p class="skill-group-label">Methoden</p>
+        <ul class="skill-list">
+          <li>Topic-based Writing</li>
+          <li>Single Source Publishing</li>
+          <li>Content-Modularisierung</li>
+          <li>Informationsarchitektur</li>
+          <li>Barrierefreiheit</li>
+          <li>Terminologiemanagement</li>
+        </ul>
+      </div>
+      <div>
+        <p class="skill-group-label">Tools & Standards</p>
+        <ul class="skill-list">
+          <li>DITA / DITA-OT</li>
+          <li>XML / XSLT</li>
+          <li>oXygen XML Editor</li>
+          <li>Adobe FrameMaker</li>
+          <li>Adobe Creative Cloud</li>
+          <li>Markdown / Git / GitHub</li>
+          <li>Microsoft 365</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Kontakt</p>
+    <p class="contact-line"><a href="#" id="mail-link" onclick="revealMail(event)">Kontakt aufnehmen</a></p>
+    <p class="contact-line">Recklinghausen, NRW</p>
+    <p class="contact-line"><a href="https://huelsboemer.com" target="_blank" rel="noopener">huelsboemer.com</a></p>
+    <p class="contact-line"><a href="https://github.com/simonh-techdoc" target="_blank" rel="noopener">github.com/simonh-techdoc</a></p>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">© 2026 Simon Hülsbömer</div>
+</footer>
+
+<script>
+  function revealMail(e) {
+    e.preventDefault();
+    var u = "simon.huelsboemer";
+    var d = "gmail.com";
+    var link = document.getElementById("mail-link");
+    link.href = "mailto:" + u + "@" + d;
+    link.textContent = u + "\u0040" + d;
+    link.onclick = null;
+    window.location.href = link.href;
+  }
+</script>
+</body>
+</html>
