@@ -28,7 +28,8 @@ body {
   padding: 0 0 40px;
 }
 .page {
-  width: 1380px;
+  width: 100%;
+  max-width: 1380px;
   background: #fff;
   box-shadow: 0 4px 32px rgba(0,0,0,0.12);
   border-radius: 0 0 10px 10px;
@@ -119,6 +120,7 @@ body {
   grid-template-columns: 1fr 1.3fr 1fr;
   flex: 1;
 }
+@media (max-width: 900px) { .bausteine { grid-template-columns: 1fr; } }
 .baustein {
   padding: 12px 10px 10px;
   border-right: 1px solid #e0e0e0;
@@ -187,10 +189,9 @@ body {
 ═══════════════════════════════════════════════════ */
 .kreislauf {
   background: var(--zb);
-  padding: 10px 22px 10px;
+  padding: 10px 8px 8px;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 .kr-header {
   background: var(--db); color: #fff;
@@ -200,22 +201,40 @@ body {
   letter-spacing: 0.3px;
 }
 
-/* Grid: 4 items oben + 4 unten, mit Pfeilen als eigene Zeilen */
-.kr-grid {
+/* Outer wrapper: [v-left] [inner-grid] [v-right] */
+.kr-outer {
   display: grid;
-  grid-template-columns: 1fr 18px 1fr 18px 1fr 18px 1fr;
-  grid-template-rows: auto 18px auto 18px auto;
+  grid-template-columns: 20px 1fr 20px;
+  grid-template-rows: 1fr;
   gap: 0;
-  align-items: start;
+  align-items: stretch;
 }
 
-/* Stationen */
+/* Vertical arrows – span full height of inner grid */
+.kr-v-left, .kr-v-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kr-v-left  { grid-column: 1; }
+.kr-v-right { grid-column: 3; }
+.kr-v-left svg, .kr-v-right svg { flex-shrink: 0; }
+
+/* Inner grid: 2 rows of stations */
+.kr-grid {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: 1fr 18px 1fr 18px 1fr 18px 1fr;
+  grid-template-rows: auto 12px auto;
+  align-items: start;
+  gap: 0;
+}
+
+/* Stations */
 .kr-item {
   display: flex; flex-direction: column; align-items: center; text-align: center;
   cursor: pointer; transition: var(--trans);
-  padding: 2px;
-  border-radius: var(--radius);
-  justify-content: flex-start;
+  padding: 2px; border-radius: var(--radius);
   align-self: start;
 }
 .kr-item:hover { background: rgba(31,56,100,0.07); transform: scale(1.04); }
@@ -223,38 +242,21 @@ body {
   width: 46px; height: 46px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 4px; flex-shrink: 0;
-  box-shadow: var(--shadow);
-  transition: var(--trans);
+  box-shadow: var(--shadow); transition: var(--trans);
 }
 .kr-item:hover .kr-circle { box-shadow: var(--shadow-hover); }
 .kr-name { font-size: 9px; font-weight: 700; color: var(--db); margin-bottom: 1px; }
 .kr-desc { font-size: 8px; color: var(--tx); line-height: 1.3; }
 
-/* Horizontale Pfeile zwischen Items */
+/* Horizontal arrows */
 .kr-h-arr {
-  display: flex; align-items: center; justify-content: center;
-  margin-top: 16px; /* push arrow to circle center */
-  height: 46px; /* same as circle */
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 18px; height: 46px;
 }
 .kr-h-arr svg { width: 18px; height: 14px; }
 
-/* Vertikale Pfeile (außen) */
-.kr-v-right {
-  position: absolute;
-  right: 4px;
-  top: 64px;
-  display: flex; align-items: flex-start; justify-content: center;
-}
-.kr-v-left {
-  position: absolute;
-  left: 4px;
-  top: 64px;
-  display: flex; align-items: flex-start; justify-content: center;
-}
-.kr-v-right svg, .kr-v-left svg { width: 20px; }
-
-/* Spacer rows */
-.kr-row-gap { grid-column: 1 / 10; height: 6px; }
+/* Gap row between upper and lower */
+.kr-row-gap { grid-column: 1 / 8; height: 0; }
 
 .kr-hint {
   font-size: 8.5px; color: var(--tx); font-style: italic;
@@ -290,8 +292,10 @@ body {
 
 /* 8 FUNDAMENTE */
 .fundamente { padding: 8px 6px; }
-.fund-title { font-size: 11px; font-weight: 700; color: var(--db); text-align: center; margin-bottom: 6px; }
-.fund-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
+.fund-title { font-size: 12px; font-weight: 700; color: var(--db); text-align: center; margin-bottom: 7px; }
+.fund-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+@media (max-width: 900px) { .fund-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; } }
+@media (max-width: 420px) { .fund-grid { grid-template-columns: 1fr; } }
 
 .fund-col {
   border: 1px solid #ddd; border-radius: var(--radius);
@@ -320,7 +324,7 @@ body {
 .fund-icon { height: 22px; display: flex; align-items: center; justify-content: center; margin: 4px 0 3px; }
 .fund-name { font-size: 8.5px; font-weight: 700; color: var(--db); text-align: center; margin-bottom: 3px; line-height: 1.3; }
 .fund-col ul { list-style: none; padding: 0; font-size: 8px; line-height: 1.45; color: var(--tx); flex: 1; }
-.fund-col ul li::before { content: '›'; margin-right: 3px; color: var(--col, var(--db)); font-weight: 700; }
+.fund-col ul li::before { content: '›'; margin-right: 4px; color: var(--col, var(--db)); font-weight: 700; }
 
 /* Merksatz – farbig und prominent */
 .fund-ms {
@@ -503,14 +507,14 @@ body {
 
 <!-- Kernthese als Banner -->
 <div class="kernthese-bar">
-  <span class="kt-badge">🎯 KERNTHESE</span>
+  <span class="kt-badge" style="display:inline-flex;align-items:center;gap:5px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg> KERNTHESE</span>
   <div class="kt-text"><strong>AI funktioniert nur mit strukturiertem, semantisch angereichertem Content</strong> – nicht mit Dokumenten.</div>
 
 </div>
 
 <!-- Verbindungszeile -->
 <div class="verbindung">
-  <span style="font-size:16px">💡</span>
+  <span style="color:var(--or);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M9 18h6M10 21h4M12 2a7 7 0 0 1 4.9 11.9c-.6.6-1 1.4-1.1 2.1H8.2c-.1-.7-.5-1.5-1.1-2.1A7 7 0 0 1 12 2z"/></svg></span>
   <span>Die 3 Bausteine beschreiben das <strong>WAS</strong> von Content – die 8 Fundamente beschreiben, <strong>WIE</strong> dieses System umgesetzt und betrieben wird.</span>
   <span style="margin-left:auto;font-size:11px;color:#888;font-style:italic">Klicke auf Elemente für mehr Details</span>
 </div>
@@ -535,9 +539,9 @@ body {
           <li>keine Dokumente, sondern Bausteine</li>
         </ul>
         <div class="bsp-lbl">Beispiele</div>
-        <div class="bsp-row"><span class="bsp-ic">✏️</span> Task: „Pumpe installieren"</div>
-        <div class="bsp-row"><span class="bsp-ic">ℹ️</span> Concept: „Sicherheitshinweise"</div>
-        <div class="bsp-row"><span class="bsp-ic">📋</span> Reference: „Technische Daten"</div>
+        <div class="bsp-row"><span class="bsp-ic" style="color:var(--db);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M17 3a2.85 2.85 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span> Task: „Pumpe installieren"</div>
+        <div class="bsp-row"><span class="bsp-ic" style="color:var(--db);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span> Concept: „Sicherheitshinweise"</div>
+        <div class="bsp-row"><span class="bsp-ic" style="color:var(--db);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span> Reference: „Technische Daten"</div>
         <div class="spacer"></div>
         <span class="frage-btn fb-bl">Frage: WIE ist der Content aufgebaut?</span>
       </div>
@@ -554,12 +558,12 @@ body {
         </ul>
         <div class="meta-lbl">Metadaten (Beispiele)</div>
         <div class="meta-grid">
-          <div class="mc"><span class="mi">👥</span><span>Zielgruppe (Anfänger, Experte)</span></div>
-          <div class="mc"><span class="mi">⚠️</span><span>Fehlertyp / Fehlercode (E123, …)</span></div>
-          <div class="mc"><span class="mi">➕</span><span>Kontext (Installation, Wartung, …)</span></div>
-          <div class="mc"><span class="mi">🎚️</span><span>Version / Variante (V2.1, …)</span></div>
-          <div class="mc"><span class="mi">⚙️</span><span>Produkt / Komponente (Pumpe, …)</span></div>
-          <div class="mc"><span class="mi">🌐</span><span>Region / Sprache (DE, EN, …)</span></div>
+          <div class="mc"><span class="mi" style="color:var(--db);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="9" cy="7" r="3.5"/><path d="M2 21v-1.5A5.5 5.5 0 0 1 9 14h0a5.5 5.5 0 0 1 5.5 5.5V21"/><circle cx="17" cy="8" r="2.5"/><path d="M22 21v-1a4 4 0 0 0-3-3.87"/></svg></span><span>Zielgruppe (Anfänger, Experte)</span></div>
+          <div class="mc"><span class="mi" style="color:var(--or);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><span>Fehlertyp / Fehlercode (E123, …)</span></div>
+          <div class="mc"><span class="mi" style="color:var(--db);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span>Kontext (Installation, Wartung, …)</span></div>
+          <div class="mc"><span class="mi" style="color:var(--db);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span><span>Version / Variante (V2.1, …)</span></div>
+          <div class="mc"><span class="mi" style="color:var(--db);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span>Produkt / Komponente (Pumpe, …)</span></div>
+          <div class="mc"><span class="mi" style="color:var(--db);display:flex;align-items:center"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span>Region / Sprache (DE, EN, …)</span></div>
         </div>
         <div class="bez-lbl">Beziehungen zwischen Inhalten (Beispiele)</div>
         <div class="bez-grid">
@@ -609,6 +613,13 @@ body {
   <!-- KREISLAUF -->
   <div class="kreislauf">
     <div class="kr-header">DER CONTENT-SYSTEM KREISLAUF (END-TO-END)</div>
+    <div class="kr-outer">
+    <div class="kr-v-left">
+      <svg viewBox="0 0 20 125" width="20" height="125">
+        <line x1="10" y1="10" x2="10" y2="122" stroke="#1F3864" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="4,20 10,7 16,20" fill="#1F3864"/>
+      </svg>
+    </div>
     <div class="kr-grid">
 
       <!-- Obere Reihe: CREATE STRUCTURE ENRICH VALIDATE -->
@@ -702,19 +713,13 @@ body {
 
 
     </div><!-- /kr-grid -->
-    <!-- Vertikale Pfeile außen, absolut positioniert -->
     <div class="kr-v-right">
       <svg viewBox="0 0 20 125" width="20" height="125">
         <line x1="10" y1="3" x2="10" y2="115" stroke="#1F3864" stroke-width="3" stroke-linecap="round"/>
         <polygon points="4,107 10,120 16,107" fill="#1F3864"/>
       </svg>
     </div>
-    <div class="kr-v-left">
-      <svg viewBox="0 0 20 125" width="20" height="125">
-        <line x1="10" y1="10" x2="10" y2="122" stroke="#1F3864" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="4,20 10,7 16,20" fill="#1F3864"/>
-      </svg>
-    </div>
+    </div><!-- /kr-outer -->
 
     <div class="kr-hint"><strong>VALIDATE</strong> sichert Qualität vor Deliver – <strong>MEASURE &amp; ANALYZE</strong> ermöglichen kontinuierliche Verbesserung.</div>
   </div><!-- /kreislauf -->
@@ -732,22 +737,22 @@ body {
       </div>
       <div class="cs-plus">+</div>
       <div class="cs-item" onclick="openModal('metadaten')" data-tip="Einheitlich, konsistent, maschinenlesbar">
-        <div class="cs-ic-wrap" style="font-size:17px">🏷️</div>
+        <div class="cs-ic-wrap" style="color:var(--db)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
         <div class="cs-name">Metadaten&shy;modell</div><div class="cs-sub">einheitlich, konsistent</div>
       </div>
       <div class="cs-plus">+</div>
       <div class="cs-item" data-tip="Portal, App, API, Print, …" onclick="openModal('cs-delivery')" style="cursor:pointer">
-        <div class="cs-ic-wrap" style="font-size:17px">🖥️</div>
+        <div class="cs-ic-wrap" style="color:var(--db)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
         <div class="cs-name">Content Delivery</div><div class="cs-sub">Portal, App, API, Print</div>
       </div>
       <div class="cs-plus">+</div>
       <div class="cs-item" data-tip="Content Flow von Erstellung bis Auslieferung" onclick="openModal('cs-prozesse')" style="cursor:pointer">
-        <div class="cs-ic-wrap" style="font-size:17px">⚙️</div>
+        <div class="cs-ic-wrap" style="color:var(--db)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
         <div class="cs-name">Prozesse</div><div class="cs-sub">Erstellung bis Auslieferung</div>
       </div>
       <div class="cs-plus">+</div>
       <div class="cs-item" data-tip="Regeln, Rollen, Qualität, Compliance" onclick="openModal('cs-governance')" style="cursor:pointer">
-        <div class="cs-ic-wrap" style="font-size:17px">🛡️</div>
+        <div class="cs-ic-wrap" style="color:var(--db)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <div class="cs-name">Governance</div><div class="cs-sub">Regeln, Rollen, Qualität</div>
       </div>
     </div>
@@ -844,23 +849,23 @@ body {
     <div class="z4-inner">
       <div class="z4-hl-red">MENSCH IM MITTELPUNKT: VERSTÄNDLICHKEIT SCHAFFT WIRKUNG</div>
       <div class="wk-chain">
-        <div class="wk-item" data-tip="Verständlicher Content ist die Basis für alle weiteren Wirkungen" onclick="openModal('wk1')"><div class="wk-icon">👤</div><div class="wk-text">Verständlicher Content</div></div>
+        <div class="wk-item" data-tip="Verständlicher Content ist die Basis für alle weiteren Wirkungen" onclick="openModal('wk1')"><div class="wk-icon" style="color:var(--or)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></div><div class="wk-text">Verständlicher Content</div></div>
         <div class="wk-arr">→</div>
-        <div class="wk-item" data-tip="User können Aufgaben selbstständig abschließen" onclick="openModal('wk2')"><div class="wk-icon">👆</div><div class="wk-text">Bessere Nutzung &amp; Task Completion</div></div>
+        <div class="wk-item" data-tip="User können Aufgaben selbstständig abschließen" onclick="openModal('wk2')"><div class="wk-icon" style="color:var(--or)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 4l7.07 17 2.51-7.39L21 11.07z"/></svg></div><div class="wk-text">Bessere Nutzung &amp; Task Completion</div></div>
         <div class="wk-arr">→</div>
-        <div class="wk-item" data-tip="Weniger Supportbedarf spart direkte Kosten" onclick="openModal('wk3')"><div class="wk-icon">🎫</div><div class="wk-text">Weniger Support Tickets &amp; Kosten</div></div>
+        <div class="wk-item" data-tip="Weniger Supportbedarf spart direkte Kosten" onclick="openModal('wk3')"><div class="wk-icon" style="color:var(--or)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><line x1="9" y1="12" x2="15" y2="12"/></svg></div><div class="wk-text">Weniger Support Tickets &amp; Kosten</div></div>
         <div class="wk-arr">→</div>
-        <div class="wk-item" data-tip="Langfristige Kundenbindung durch Vertrauen" onclick="openModal('wk4')"><div class="wk-icon">⚡</div><div class="wk-text">Höhere Zufriedenheit &amp; Vertrauen</div></div>
+        <div class="wk-item" data-tip="Langfristige Kundenbindung durch Vertrauen" onclick="openModal('wk4')"><div class="wk-icon" style="color:var(--or)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="wk-text">Höhere Zufriedenheit &amp; Vertrauen</div></div>
       </div>
       <div class="kpi-lbl">Typische KPIs (Beispiele)</div>
       <div class="kpi-g3">
-        <div class="kpi-it" data-tip="Anteil abgeschlossener Aufgaben" onclick="openModal('kpi1')"><div class="kpi-ic">✅</div><div class="kpi-tx">Task Completion Rate</div></div>
-        <div class="kpi-it" data-tip="Qualität der Suchergebnisse" onclick="openModal('kpi2')"><div class="kpi-ic">🔍</div><div class="kpi-tx">Sucheffizienz / -qualität</div></div>
-        <div class="kpi-it" data-tip="Welche Topics werden genutzt?" onclick="openModal('kpi3')"><div class="kpi-ic">📊</div><div class="kpi-tx">Nutzung einzelner Topics</div></div>
+        <div class="kpi-it" data-tip="Anteil abgeschlossener Aufgaben" onclick="openModal('kpi1')"><div class="kpi-ic" style="color:var(--gr)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg></div><div class="kpi-tx">Task Completion Rate</div></div>
+        <div class="kpi-it" data-tip="Qualität der Suchergebnisse" onclick="openModal('kpi2')"><div class="kpi-ic" style="color:var(--db)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="kpi-tx">Sucheffizienz / -qualität</div></div>
+        <div class="kpi-it" data-tip="Welche Topics werden genutzt?" onclick="openModal('kpi3')"><div class="kpi-ic" style="color:var(--db)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div><div class="kpi-tx">Nutzung einzelner Topics</div></div>
       </div>
       <div class="kpi-g2" style="margin-top:4px">
-        <div class="kpi-it" data-tip="Supportlast als Qualitätsindikator" onclick="openModal('kpi4')"><div class="kpi-ic">💬</div><div class="kpi-tx">Support-Tickets / Rückfragen</div></div>
-        <div class="kpi-it" data-tip="Wie lange bleiben User auf dem Content?" onclick="openModal('kpi5')"><div class="kpi-ic">⏱️</div><div class="kpi-tx">Engagement / Verweildauer</div></div>
+        <div class="kpi-it" data-tip="Supportlast als Qualitätsindikator" onclick="openModal('kpi4')"><div class="kpi-ic" style="color:var(--db)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="kpi-tx">Support-Tickets / Rückfragen</div></div>
+        <div class="kpi-it" data-tip="Wie lange bleiben User auf dem Content?" onclick="openModal('kpi5')"><div class="kpi-ic" style="color:var(--db)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="kpi-tx">Engagement / Verweildauer</div></div>
       </div>
     </div>
   </div>
@@ -907,7 +912,7 @@ body {
       <div class="z4-line l"></div>WIRKUNG &amp; ENTWICKLUNG<div class="z4-line r"></div>
     </div>
     <div class="z4-inner">
-      <div class="fl-lbl"><span style="font-size:16px">⚠️</span> TYPISCHE FEHLER</div>
+      <div class="fl-lbl"><span style="color:var(--or)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> TYPISCHE FEHLER</div>
       <ul class="fehler-list">
         <li data-tip="Tools lösen keine strukturellen Probleme" onclick="openModal('fe1')">Tool vor Struktur</li>
         <li data-tip="Schlechter Content bleibt schlecht – egal wie gut die KI ist" onclick="openModal('fe2')">AI vor Content-Qualität</li>
@@ -920,7 +925,7 @@ body {
       <div class="saetze-lbl">DIE 3 SÄTZE, DIE BLEIBEN SOLLTEN</div>
       <div class="satz-row" onclick="openModal('satz1')"><div class="sz sc1">1</div><span>AI-ready Content ist ein Architekturproblem, kein Toolproblem.</span></div>
       <div class="satz-row" onclick="openModal('satz2')"><div class="sz sc2">2</div><span>Nicht der Content ist das Produkt – sondern das messbare, lernende System.</span></div>
-      <div class="satz-row" onclick="openModal('satz3')"><div class="sz sc3">3</div><span>Struktur + Semantik + Granularität = nutzbarer, kombinierbarer Content. 💡</span></div>
+      <div class="satz-row" onclick="openModal('satz3')"><div class="sz sc3">3</div><span>Struktur + Semantik + Granularität = nutzbarer, kombinierbarer Content. <span style="color:var(--or);display:inline-flex;vertical-align:middle"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M9 18h6M10 21h4M12 2a7 7 0 0 1 4.9 11.9c-.6.6-1 1.4-1.1 2.1H8.2c-.1-.7-.5-1.5-1.1-2.1A7 7 0 0 1 12 2z"/></svg></span></span></div>
     </div>
   </div>
 
@@ -929,13 +934,13 @@ body {
 <!-- ══ Z5: FOOTER ══ -->
 <div class="z5">
   <div class="footer-nav">
-    <div class="fn-item" onclick="openModal('m-menschen')"><span class="fn-ic">👥</span><span class="fn-lbl">Menschen</span></div>
-    <div class="fn-item" onclick="openModal('m-inhalte')"><span class="fn-ic">📄</span><span class="fn-lbl">Inhalte</span></div>
-    <div class="fn-item" onclick="openModal('fn-systeme')"><span class="fn-ic">🖥️</span><span class="fn-lbl">Systeme</span></div>
-    <div class="fn-item" onclick="openModal('fn-prozesse')"><span class="fn-ic">⚙️</span><span class="fn-lbl">Prozesse</span></div>
-    <div class="fn-item" onclick="openModal('fn-daten')"><span class="fn-ic">📊</span><span class="fn-lbl">Daten</span></div>
-    <div class="fn-item" onclick="openModal('fn-verbesserung')"><span class="fn-ic">🔄</span><span class="fn-lbl">Verbesserung</span></div>
-    <div class="fn-item" onclick="openModal('fn-ki')"><span class="fn-ic">🤖</span><span class="fn-lbl">KI &amp; Zukunft</span></div>
+    <div class="fn-item" onclick="openModal('m-menschen')"><span class="fn-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="9" cy="7" r="3.5"/><path d="M2 21v-1.5A5.5 5.5 0 0 1 9 14h0a5.5 5.5 0 0 1 5.5 5.5V21"/><circle cx="17" cy="8" r="2.5"/><path d="M22 21v-1a4 4 0 0 0-3-3.87"/></svg></span><span class="fn-lbl">Menschen</span></div>
+    <div class="fn-item" onclick="openModal('m-inhalte')"><span class="fn-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg></span><span class="fn-lbl">Inhalte</span></div>
+    <div class="fn-item" onclick="openModal('fn-systeme')"><span class="fn-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span><span class="fn-lbl">Systeme</span></div>
+    <div class="fn-item" onclick="openModal('fn-prozesse')"><span class="fn-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></span><span class="fn-lbl">Prozesse</span></div>
+    <div class="fn-item" onclick="openModal('fn-daten')"><span class="fn-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span><span class="fn-lbl">Daten</span></div>
+    <div class="fn-item" onclick="openModal('fn-verbesserung')"><span class="fn-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><polyline points="23,4 23,10 17,10"/><polyline points="1,20 1,14 7,14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span><span class="fn-lbl">Verbesserung</span></div>
+    <div class="fn-item" onclick="openModal('fn-ki')"><span class="fn-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="15.5" cy="12" r="1.5" fill="currentColor" stroke="none"/><path d="M8.5 8V6M15.5 8V6M8.5 18v-2M15.5 18v-2M3 12H1M23 12h-2"/></svg></span><span class="fn-lbl">KI &amp; Zukunft</span></div>
   </div>
   <div class="footer-bottom">
     <div style="width:170px"></div>
