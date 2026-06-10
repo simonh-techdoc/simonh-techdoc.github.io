@@ -168,6 +168,28 @@
 
     .project-link:hover { border-bottom-color: var(--accent); }
 
+    .project-link-btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      font-weight: 400;
+      color: #fff;
+      background: var(--accent);
+      text-decoration: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2px;
+      border: 1px solid var(--accent);
+      transition: background 0.15s, box-shadow 0.15s;
+      box-shadow: 0 1px 4px rgba(45,90,61,0.15);
+    }
+
+    .project-link-btn:hover {
+      background: #1e3d2a;
+      border-color: #1e3d2a;
+      box-shadow: 0 3px 10px rgba(45,90,61,0.25);
+    }
+
     /* Versions-Badge */
     .version-badge {
       display: inline-block;
@@ -254,7 +276,7 @@
       border: 1px solid var(--accent);
       border-radius: 2px;
       padding: 1.2rem 1.4rem;
-      background: #f7faf8;
+      background: #fff;
       margin-top: 1rem;
     }
 
@@ -434,8 +456,8 @@
         <p class="interactive-block-label">Was Version 2 neu bringt</p>
         <p class="interactive-block-text">Inhaltlich: erweiterter Semantik-Block (Semantik als Entscheidungslogik, nicht nur Tagging), vier statt zwei Relationstypen, iiRDS-Systemintegration als eigene Aussage.<br>Technisch: zentrale Elemente sind klickbar und öffnen Infoboxen mit Erläuterung, Kontext und strategischer Einordnung. Single-File-HTML, keine externen Abhängigkeiten, direkt deploybar.</p>
         <div class="interactive-block-links">
-          <a class="project-link" href="ai-ready-content-model-website.html" target="_blank" rel="noopener">
-            → Interaktive Version öffnen
+          <a class="project-link-btn" href="ai-ready-content-model-website.html" target="_blank" rel="noopener">
+            Interaktive Version öffnen →
           </a>
           <a class="project-link" href="ai-ready-content-model.png" target="_blank" rel="noopener">
             → Statische Grafik (V1) öffnen
