@@ -31,7 +31,6 @@
       min-height: 100vh;
     }
 
-    /* ── Layout ── */
     .wrap {
       max-width: 680px;
       margin: 0 auto;
@@ -65,10 +64,7 @@
       animation: rise 0.7s ease forwards 0.2s;
     }
 
-    h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
+    h1 em { font-style: italic; color: var(--accent); }
 
     .tagline {
       font-size: 1.05rem;
@@ -105,7 +101,7 @@
       color: var(--ink);
     }
 
-    /* ── Profil-Text ── */
+    /* ── Profil ── */
     .profil p { margin-bottom: 1rem; }
     .profil p:last-child { margin-bottom: 0; }
 
@@ -116,7 +112,10 @@
       border-radius: 2px;
       padding: 2rem 2rem 1.8rem;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      margin-bottom: 1.5rem;
     }
+
+    .project-card:last-child { margin-bottom: 0; }
 
     .project-card:hover {
       border-color: var(--accent);
@@ -135,6 +134,9 @@
       margin-bottom: 1.4rem;
       line-height: 1.65;
     }
+
+    .project-desc p { margin-bottom: 0.8rem; }
+    .project-desc p:last-child { margin-bottom: 0; }
 
     .tags {
       display: flex;
@@ -166,7 +168,119 @@
 
     .project-link:hover { border-bottom-color: var(--accent); }
 
-    /* ── Skills-Raster ── */
+    /* Versions-Badge */
+    .version-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 2px;
+      padding: 0.15rem 0.5rem;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    .version-badge.v1 {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--rule);
+    }
+
+    /* Grafik-Preview mit Weiterentwicklungs-Hinweis */
+    .model-preview-wrap {
+      position: relative;
+      margin: 1.2rem 0 1.4rem;
+    }
+
+    .model-preview-wrap a {
+      display: block;
+    }
+
+    .model-preview-wrap img {
+      width: 100%;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      cursor: zoom-in;
+      transition: opacity 0.2s;
+    }
+
+    .model-preview-wrap:hover img { opacity: 0.92; }
+
+    .preview-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Pfeil-Verbindung zwischen V1 und V2 */
+    .version-connector {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 1.2rem 0;
+      padding: 0.9rem 1rem;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+    }
+
+    .connector-arrow {
+      font-size: 1.1rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .connector-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .connector-text strong {
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    /* Interaktiv-Link-Block */
+    .interactive-block {
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      padding: 1.2rem 1.4rem;
+      background: #f7faf8;
+      margin-top: 1rem;
+    }
+
+    .interactive-block-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .interactive-block-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0.9rem;
+    }
+
+    .interactive-block-links {
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── Skills ── */
     .skills-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -235,6 +349,7 @@
     @media (max-width: 500px) {
       .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
       h1 { font-size: 2.2rem; }
+      .interactive-block-links { flex-direction: column; gap: 0.8rem; }
     }
   </style>
 </head>
@@ -258,7 +373,9 @@
 
   <section>
     <p class="section-label">Projekte</p>
-    <div class="project-card" style="margin-bottom:1.5rem;">
+
+    <!-- Projekt 1: Escape Room -->
+    <div class="project-card">
       <p class="project-title">Escape Room – DITA-Dokumentationsprojekt</p>
       <p class="project-desc">Exemplarisches DITA-Projekt mit vollständigem Publishing-Workflow: Topic-based Writing, Key-basierte Wiederverwendung, automatisierter Export als HTML5, PDF und WordPress via DITA-OT, Python und WordPress REST API.</p>
       <div class="tags">
@@ -275,9 +392,15 @@
         → GitHub ansehen
       </a>
     </div>
+
+    <!-- Projekt 2: AI-ready Content Model -->
     <div class="project-card">
       <p class="project-title">AI-ready Content Model</p>
-      <p class="project-desc">Konzeptionelles Framework zur Strukturierung von Inhalten für KI-gestützte Systeme – entwickelt in mehreren Iterationen. Das Modell beschreibt drei zentrale Bausteine: Struktur, Semantik und Granularität. Ergänzend zeigt es acht Grundlagen eines AI-ready Content Systems – mit Fokus auf die Rolle des Technical Writers als Content-Orchestrator zwischen Fachwissen, Content-Strategie und technischer Nutzbarkeit.</p>
+      <div class="project-desc">
+        <p>Eigenentwickeltes Framework zur Beschreibung von AI-ready Content-Architekturen. Es beantwortet die Kernfrage: Welche Struktur braucht Content, damit KI-Systeme ihn sinnvoll verarbeiten können – und was unterscheidet ein Content-System von einer Dokumentensammlung?</p>
+        <p>Das Modell definiert drei Bausteine (Struktur, Semantik, Granularität), acht Fundamente für den Systembetrieb und einen End-to-End-Kreislauf von Content-Erstellung bis kontinuierlicher Verbesserung. Gestützt auf Erkenntnisse der Information Energy 2026, des Docufy Summit und Zieglers RAG-Forschung zu DITA und semantischen Metadaten.</p>
+        <p style="font-style:italic; color: var(--ink);">Dieses Framework ist kein akademisches Konstrukt – es ist mein eigenes Positioning-Instrument, das ich in Bewerbungsgesprächen, auf Konferenzen und im Austausch mit der Fachcommunity einsetze.</p>
+      </div>
       <div class="tags">
         <span class="tag">Information Architecture</span>
         <span class="tag">Content Strategy</span>
@@ -285,12 +408,44 @@
         <span class="tag">Metadaten</span>
         <span class="tag">Semantik</span>
         <span class="tag">CCMS</span>
+        <span class="tag">RAG</span>
+        <span class="tag">HTML / CSS / JS</span>
       </div>
-      <a href="ai-ready-content-model.png" target="_blank" rel="noopener" title="Zum Vergrößern klicken">
-        <img src="ai-ready-content-model.png" alt="AI-ready Content Model – Framework zur Strukturierung von Inhalten für KI-gestützte Systeme" style="width:100%; border:1px solid var(--rule); border-radius:2px; margin-top:0.5rem; cursor:zoom-in;">
-      </a>
+
+      <!-- V1: Statische Grafik -->
+      <p class="preview-label"><span class="version-badge v1">Version 1</span> Statische Infografik</p>
+      <div class="model-preview-wrap">
+        <a href="ai-ready-content-model.png" target="_blank" rel="noopener" title="Grafik in voller Größe öffnen">
+          <img src="ai-ready-content-model.png" alt="AI-ready Content Model – statische Infografik, Version 1" />
+        </a>
+      </div>
+
+      <!-- Verbindungspfeil V1 → V2 -->
+      <div class="version-connector">
+        <span class="connector-arrow">↓</span>
+        <div class="connector-text">
+          <strong>Weiterentwicklung zu Version 2</strong> — aus der statischen Grafik wurde eine vollständig interaktive Website: jedes Element erklärbar, alle Zusammenhänge aufklappbar, gebaut als Single-File-HTML ohne externe Abhängigkeiten.
+        </div>
+      </div>
+
+      <!-- V2: Interaktive Website -->
+      <p class="preview-label"><span class="version-badge">Version 2</span> Interaktive Website</p>
+      <div class="interactive-block">
+        <p class="interactive-block-label">Was Version 2 kann</p>
+        <p class="interactive-block-text">Alle 8 Fundamente, alle Kreislauf-Stationen, die Wirkungskette, KPIs und Fehler-Patterns sind klickbar und öffnen Infoboxen mit Erläuterung, Kontext und strategischer Einordnung. Single-File-HTML, keine externen Abhängigkeiten, direkt deploybar.</p>
+        <div class="interactive-block-links">
+          <a class="project-link" href="ai-ready-content-model-website.html" target="_blank" rel="noopener">
+            → Interaktive Version öffnen
+          </a>
+          <a class="project-link" href="ai-ready-content-model.png" target="_blank" rel="noopener">
+            → Statische Grafik (V1) öffnen
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="project-card" style="margin-top:1.5rem;">
+
+    <!-- Projekt 3: Vertikalmaus -->
+    <div class="project-card">
       <p class="project-title">Bedienungsanleitung Vertikalmaus (Auszug)</p>
       <p class="project-desc">Kursarbeit im Rahmen der IHK-Weiterbildung Technischer Redakteur. Erstellt für eine ergonomische Bluetooth-Maus (Tecknet TK-MS017) – inklusive Textkonzept, technischer Produktübersicht (Adobe Illustrator), strukturierter Handlungsanweisungen für Verbindung, Fehlerbehebung und Ladevorgang sowie eines Glossars.</p>
       <div class="tags">
@@ -306,6 +461,7 @@
         → PDF ansehen
       </a>
     </div>
+
   </section>
 
   <section>
@@ -348,7 +504,6 @@
       <a href="https://www.linkedin.com/in/simon-huelsboemer" target="_blank" rel="noopener">LinkedIn</a>
     </p>
   </section>
-
 
   <section id="impressum">
     <p class="section-label">Impressum</p>
