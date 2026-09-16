@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simon Hülsbömer – Technical Writer</title>
+  <meta name="description" content="Portfolio von Simon Hülsbömer: Technische Redaktion, Structured Content, Docs as Code und Information Architecture." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:title" content="Simon Hülsbömer – Technical Writer" />
+  <meta property="og:description" content="Technische Redaktion, Structured Content, Docs as Code und Information Architecture – Projekte und Kompetenzen." />
+  <meta property="og:url" content="https://simonh-techdoc.github.io/" />
+  <meta property="og:image" content="https://simonh-techdoc.github.io/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Simon Hülsbömer – Technical Writer · Structured Content · Information Architecture" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://simonh-techdoc.github.io/" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
@@ -84,6 +97,7 @@
 
     .section-label {
       font-family: var(--mono);
+      font-weight: 300;
       font-size: 0.68rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -370,7 +384,7 @@
       font-family: var(--mono);
       font-size: 0.68rem;
       letter-spacing: 0.08em;
-      color: var(--rule);
+      color: var(--muted);
       text-align: center;
     }
 
@@ -387,6 +401,12 @@
     section:nth-of-type(4) { animation-delay: 0.95s; }
     section:nth-of-type(5) { animation-delay: 1.1s; }
     section:nth-of-type(6) { animation-delay: 1.25s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      header *, section { opacity: 1 !important; transform: none !important; }
+    }
 
     @media (max-width: 500px) {
       .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -406,7 +426,7 @@
   </header>
 
   <section>
-    <p class="section-label">Profil</p>
+    <h2 class="section-label">Profil</h2>
     <div class="profil">
       <p>Ich verbinde 18 Jahre B2B-IT, Fachredaktion und Wissensaufbereitung mit einer erfolgreichen Neuorientierung in die Technische Dokumentation. Bei IDG war ich als Senior Research Manager, Program Manager Executive Education und leitender Redakteur für COMPUTERWOCHE, CIO und TecChannel tätig – an der Schnittstelle von Technologie, Zielgruppe und verständlicher Entscheidungsinformation. Komplexe Technologiethemen so aufzubereiten, dass Entscheiderinnen und Entscheider im Business-Kontext damit arbeiten können, war dabei die zentrale Aufgabe – unabhängig vom jeweiligen Rollentitel.</p>
       <p>2026 habe ich beim IBB Institut für Berufliche Bildung den tekom-akkreditierten Lehrgang „IHK-Fachkraft Technischer Redakteur“ erfolgreich abgeschlossen. Inhaltlich habe ich meinen Schwerpunkt gezielt auf strukturierte Inhalte, Softwaredokumentation, CCMS, Metadaten und Informationsarchitektur gelegt.</p>
@@ -415,11 +435,11 @@
   </section>
 
   <section>
-    <p class="section-label">Projekte</p>
+    <h2 class="section-label">Projekte</h2>
 
     <!-- Projekt 1: Escape Room -->
     <div class="project-card">
-      <p class="project-title">Escape Room – DITA-Dokumentationsprojekt</p>
+      <h3 class="project-title">Escape Room – DITA-Dokumentationsprojekt</h3>
       <p class="project-desc">Exemplarisches DITA-Projekt mit vollständigem Publishing-Workflow: Topic-based Writing, Key-basierte Wiederverwendung, automatisierter Export als HTML5, PDF und WordPress via DITA-OT, Python und WordPress REST API. Zeigt, wie ein einziger strukturierter Content-Bestand ohne manuelle Eingriffe in drei völlig unterschiedliche Ausgabeformate überführt wird – und was das in der Praxis bedeutet.</p>
       <div class="tags">
         <span class="tag">DITA 1.3</span>
@@ -436,7 +456,7 @@
 
     <!-- Projekt 2: Portfolio als Docs-as-Code-Referenz -->
     <div class="project-card">
-      <p class="project-title">Dieses Portfolio – Docs as Code in der Praxis</p>
+      <h3 class="project-title">Dieses Portfolio – Docs as Code in der Praxis</h3>
       <p class="project-desc">Diese Website ist selbst ein Docs-as-Code-Projekt: HTML/CSS als Source, Git und GitHub für Versionsverwaltung und nachvollziehbare Änderungen, GitHub Pages für die Web-Publikation. Damit ist das Portfolio nicht nur Präsentationsfläche, sondern zugleich ein praktisches Beispiel für einen codebasierten Dokumentationsworkflow.</p>
       <div class="tags">
         <span class="tag">Docs as Code</span>
@@ -451,7 +471,7 @@
 
     <!-- Projekt 3: AI-ready Content Model -->
     <div class="project-card">
-      <p class="project-title">AI-ready Content Model</p>
+      <h3 class="project-title">AI-ready Content Model</h3>
       <div class="project-desc">
         <p>Eigenentwickeltes Framework zur Beschreibung von AI-ready Content-Architekturen: Welche Struktur braucht Content, damit KI-Systeme ihn sinnvoll verarbeiten können – und was unterscheidet ein Content-System von einer Dokumentensammlung?</p>
         <p>Drei Bausteine (Struktur, Semantik, Granularität), acht Fundamente für den Systembetrieb, ein End-to-End-Kreislauf – entwickelt in mehreren konzeptionellen, inhaltlichen und visuellen Iterationen. Impulse aus Fachkonferenzen und aktueller Forschung zu DITA, RAG und semantischen Metadaten flossen dabei zu einem eigenständigen Gesamtmodell zusammen.</p>
@@ -500,7 +520,7 @@
 
     <!-- Projekt 4: Vertikalmaus -->
     <div class="project-card">
-      <p class="project-title">Teilbedienungsanleitung Vertikalmaus (TECKNET MS-017)</p>
+      <h3 class="project-title">Teilbedienungsanleitung Vertikalmaus (TECKNET MS-017)</h3>
       <p class="project-desc">Teilbedienungsanleitung für eine ergonomische Funkmaus – mit Textkonzept, technischer Illustration (Adobe Illustrator), strukturierten Handlungsanweisungen für Verbindung, Fehlerbehebung und Ladevorgang sowie einem Glossar. Layout und Satz in Adobe InDesign; Titelbild eigene Fotografie, nachbearbeitet in Adobe Photoshop.</p>
       <div class="tags">
         <span class="tag">Technische Dokumentation</span>
@@ -522,7 +542,7 @@
   </section>
 
   <section>
-    <p class="section-label">Kompetenzen</p>
+    <h2 class="section-label">Kompetenzen</h2>
     <div class="skills-grid">
       <div>
         <p class="skill-group-label">Methoden & Konzepte</p>
@@ -575,7 +595,7 @@
   </section>
 
   <section id="impressum">
-    <p class="section-label">Impressum</p>
+    <h2 class="section-label">Impressum</h2>
     <p style="font-size:0.88rem; color:var(--muted); line-height:1.8;">
       Angaben gemäß § 5 DDG:<br>Simon Hülsbömer · Rutenweg 12 · 45665 Recklinghausen · <a href="#" id="impressum-mail" onclick="revealImpressumMail(event)" style="color:var(--muted); border-bottom:1px solid var(--rule);">simon [at] huelsboemer.com</a>
     </p>
